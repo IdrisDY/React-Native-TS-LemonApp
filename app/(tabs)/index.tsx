@@ -1,59 +1,94 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { View, Image, StyleSheet, Platform } from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { HelloWave } from "@/components/HelloWave";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import LittleLemonHeader from "@/components/litttleLemon";
+import LemonFooter from "@/components/LittleLemonFooter";
+import { ComponentProps, FC, useState } from "react";
 
-export default function HomeScreen() {
+type HomeProps = {
+  identity: number;
+  // size: string;
+  // union
+  primaryColor: "red" | "blue";
+  // array that is typed
+  cardNumbers?: number[];
+  // tuple, specify length of array
+  padding?: [number, number, number, number];
+  // use when the keys and properties need to be typed e.g - z-index-string: 2-number
+  userInfo: Record<string, number>;
+  onClick: () => void;
+  children: React.ReactNode;
+};
+
+// interface HomeProps{
+//   tea:string
+// }
+// use of & is intersect /extending with types and interface
+type LinkProps = ComponentProps<"a"> & {
+  variant: "Primary " | "Secondary";
+};
+interface buttonProps {
+  btnText: string;
+}
+
+interface superButtonProps extends buttonProps {
+  size: "md" | "lg";
+}
+
+type User = {
+  name: string;
+  mobile: number;
+  id: number;
+};
+
+type Guest = Omit<User, "id">;
+
+// Generics
+function convertToArray<T>(value: T): T[] {
+  return [value] ;
+}
+
+// makes it readonly
+const stringOptions = ["option 1", "option 2", "option 3"] as const;
+
+export default function HomeScreen({ size }: superButtonProps) {
+  const [stim, setTims] = useState<User | null>(null);
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    // <ParallaxScrollView
+    //   headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
+    //   headerImage={
+    //     <Image
+    //       source={require("@/assets/images/partial-react-logo.png")}
+    //       style={styles.reactLogo}
+    //     />
+    //   }
+    // >
+    //   <LittleLemonHeader />
+    // </ParallaxScrollView>
+    <>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#495E57",
+        }}
+      >
+        <LittleLemonHeader />
+      </View>
+      <View style={{ backgroundColor: "#495E57" }}>
+        <LemonFooter />
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
   },
   stepContainer: {
@@ -65,6 +100,6 @@ const styles = StyleSheet.create({
     width: 290,
     bottom: 0,
     left: 0,
-    position: 'absolute',
+    position: "absolute",
   },
 });
