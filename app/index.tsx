@@ -7,6 +7,7 @@ import { ThemedView } from "@/components/ThemedView";
 import LittleLemonHeader from "@/components/litttleLemon";
 import LemonFooter from "@/components/LittleLemonFooter";
 import { ComponentProps, FC, useState } from "react";
+import { Link } from "expo-router";
 
 type HomeProps = {
   identity: number;
@@ -48,7 +49,7 @@ type Guest = Omit<User, "id">;
 
 // Generics
 function convertToArray<T>(value: T): T[] {
-  return [value] ;
+  return [value];
 }
 
 // makes it readonly
@@ -73,33 +74,18 @@ export default function HomeScreen({ size }: superButtonProps) {
       <View
         style={{
           flex: 1,
-          backgroundColor: "#495E57",
+          backgroundColor: "white",
         }}
       >
-        <LittleLemonHeader />
+        {/* <LittleLemonHeader /> */}
       </View>
-      <View style={{ backgroundColor: "#495E57" }}>
-        <LemonFooter />
+      <View>
+        <ThemedText>You think its because of that?</ThemedText>
+        <Link href={"/profile"} className="text-white bg-blue-600">
+          {" "}
+          Go to the profile
+        </Link>
       </View>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-});
