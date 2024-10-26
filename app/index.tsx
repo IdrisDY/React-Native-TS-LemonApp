@@ -1,4 +1,11 @@
-import { View, Image, StyleSheet, Platform } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  Platform,
+  ScrollView,
+  Text,
+} from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -7,8 +14,11 @@ import { ThemedView } from "@/components/ThemedView";
 import LittleLemonHeader from "@/components/litttleLemon";
 import LemonFooter from "@/components/LittleLemonFooter";
 import { ComponentProps, FC, useState } from "react";
-import { Link } from "expo-router";
-
+import { Link, router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { images } from "@/constants";
+import CustomButton from "@/components/navigation/CustomButton";
+import { StatusBar } from "expo-status-bar";
 type HomeProps = {
   identity: number;
   // size: string;
@@ -59,33 +69,48 @@ export default function HomeScreen({ size }: superButtonProps) {
   const [stim, setTims] = useState<User | null>(null);
 
   return (
-    // <ParallaxScrollView
-    //   headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-    //   headerImage={
-    //     <Image
-    //       source={require("@/assets/images/partial-react-logo.png")}
-    //       style={styles.reactLogo}
-    //     />
-    //   }
-    // >
-    //   <LittleLemonHeader />
-    // </ParallaxScrollView>
-    <>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: "white",
-        }}
-      >
-        {/* <LittleLemonHeader /> */}
-      </View>
-      <View>
-        <ThemedText>You think its because of that?</ThemedText>
-        <Link href={"/profile"} className="text-white bg-blue-600">
-          {" "}
-          Go to the profile
-        </Link>
-      </View>
-    </>
+    <SafeAreaView className="bg-primary">
+      <ScrollView contentContainerStyle={{ height: "100%" }}>
+        <View className="w-full min-h-[100vh] justify-center items-center  px-4">
+          <Image
+            source={images.logo}
+            className="w-[130px] h-[84px]"
+            resizeMode="contain"
+          />
+
+          <Image
+            source={images.cards}
+            className="max-w-[380px] w-full h-[250px]"
+            resizeMode="contain"
+          />
+
+          <View className="relative mt-5">
+            <Text className="text-white text-3xl">
+              {" "}
+              Discover Endless Possibilities with{" "}
+              <Text className="text-secondary-200"> Aora </Text>{" "}
+            </Text>
+            <Image
+              source={images.path}
+              className="w-[136px] h-[15px] absolute -bottom-2 -right-8"
+              resizeMode="contain"
+            />
+          </View>
+          <Text className="text-gray-100 mt-7 text-center font-pregular text-sm">
+            {" "}
+            Where creativity meets innovation: embark on a journey of limitless
+            exploration with Aora{" "}
+          </Text>
+          <CustomButton
+            title="Continue with Email"
+            handlePress={() => {
+              router.push("/sign-in");
+            }}
+            containerStyles="w-full mt-7"
+          />
+        </View>
+      </ScrollView>
+      <StatusBar backgroundColor="#161622" style="dark" />
+    </SafeAreaView>
   );
 }
